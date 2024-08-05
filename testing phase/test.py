@@ -1,13 +1,12 @@
 import cv2
-imagepath = '/dataset/1.jpg'
-img = cv2.imread(imagepath)
-img.shape(4000, 2667, 3)
-gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-gray_image.shape(4000, 2667)
 
-face_classifier = cv2.CascadeClassifier(
-    cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
-)
+imagePath = 'testing phase/dataset/1.jpg'
+#sorry linux directory 
+img = cv2.imread(imagePath)
+img.shape 
+gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+gray_image.shape
+face_classifier = cv2.CascadeClassifier("testing phase/haarcascade_frontalface_default.xml")
 face = face_classifier.detectMultiScale(
     gray_image, scaleFactor=1.1, minNeighbors=5, minSize=(40, 40)
 )
