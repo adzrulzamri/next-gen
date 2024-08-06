@@ -1,24 +1,34 @@
 import cv2
+face_classifier = cv2.CascadeClassifier(cv2.data.haarcascades + "/home/koyen/Documents/next-gen/testing phase/haarcascade_frontalface_default.xml")
+video_capture = cv2.VideoCapture(0)
+ret, frame = video_capture.read()
+def detect_bounding_box(vid):
+    gray_image = cv2.cvtColor(vid, cv2.COLOR_BGR2GRAY)
+    faces = face_classifier.detectMultiScale(gray_image, 1.1, 5, minSize=(40, 40))
+    for (x, y, w, h) in faces:
+        cv2.rectangle(vid, (x, y), (x + w, y + h), (0, 255, 0), 4)
+    return faces
+def detect_bounding_box(vid):
+    gray_image = cv2.cvtColor(vid, cv2.COLOR_BGR2GRAY)
+    faces = face_classifier.detectMultiScale(gray_image, 1.1, 5, minSize=(40, 40))
+    for (x, y, w, h) in faces:
+        cv2.rectangle(vid, (x, y), (x + w, y + h), (0, 255, 0), 4)
+    return faces
+while True:
+    result, video_frame = video_capture.read()  # read frames from the video
+    if result is False:
+        break  # terminate the loop if the frame is not read successfully
 
-imagePath = 'testing phase/dataset/1.jpg'
-#sorry linux directory 
-img = cv2.imread(imagePath)
-img.shape 
-gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-gray_image.shape
-face_classifier = cv2.CascadeClassifier("testing phase/haarcascade_frontalface_default.xml")
-face = face_classifier.detectMultiScale(
-    gray_image, scaleFactor=1.1, minNeighbors=5, minSize=(40, 40)
-)
-for (x, y, w, h) in face:
-    cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 4)
+    faces = detect_bounding_box(
+        video_frame
+    )  # use the function we created earlier to the video frame
 
-img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    cv2.imshow(
+        "My Face Detection Project", video_frame
+    )  # display the processed frame in a window named "My Face Detection Project"
 
-import matplotlib.pyplot as plt
+    if cv2.waitKey(1) & 0xFF == ord("q"):
+        break
 
-
-
-plt.figure(figsize=(20,10))
-plt.imshow(img_rgb)
-plt.axis('off')
+video_capture.release()
+cv2.destroyAllWindows()
