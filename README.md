@@ -5,3 +5,5 @@ something ..... yes
 dependecy that currenly in use :
  opencv
  flask
+ yolov8
+ easyocr
